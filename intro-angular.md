@@ -80,9 +80,9 @@ Lo que estamos diciendo es que cada ves q un nuevo UserItemComponent es creado s
 Ahora solamente para agregar esto a nuestra app vamos a user-item.component.html y agregamos:
 
 ```html
-  &lt;p&gt;
+  <p>
     Hello {{name}}
-  &lt;/p&gt;
+  </p>
 ```
 
 
@@ -161,16 +161,16 @@ Como vemos importamos el modulo **Input**. Luego agregamos @Input a la propiedad
 Ahora veamos como utilizamos eso en nuestro template.
 
 ```html
-&lt;app-user-item
+<app-user-item
     *ngFor="let name of names"
-[name]="name"&gt; &lt;/app-user-item&gt;
+[name]="name"> </app-user-item>
 ```
 
 - [name]: Indica que queremos pasar un valor a la variable name del componente  user-item
 - "name" viene de "let name", osea es el valor de cada elemento del arreglo names, para que quede mas claro lo podemos escribirlo
 
 ```html
-  &lt;app-user-item
-  *ngFor="let individualUserName of names" [name]="individualUserName"&gt;
-  &lt;/app-user-item&gt;
+  <app-user-item
+  *ngFor="let individualUserName of names" [name]="individualUserName">
+  </app-user-item>
 ```
