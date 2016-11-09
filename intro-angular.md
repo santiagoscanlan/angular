@@ -2,20 +2,17 @@
 
 ## Componenetes
 
-HTML entiende una cantidad limitada de built-in tags, como  <select>, <form>, <video> que tienen una funcionalidad definida por el browser.
+HTML entiende una cantidad limitada de built-in tags, como  &lt;select&gt;, &lt;form&gt;, &lt;video&gt; que tienen una funcionalidad definida por el browser.
 
-¿Qué pasaría si le quisieramos enseñar al browser nuevos tags? Por ejemplo, <weather> que muestre el clima, o <login> que muestre un panel para iniciar sesión.
+¿Qué pasaría si le quisieramos enseñar al browser nuevos tags? Por ejemplo, &lt;weather&gt; que muestre el clima, o &lt;login&gt; que muestre un panel para iniciar sesión.
 
 Ese es el fundamento principal de los componentes: Le enseñaremos al browser nuevos tags que tienen funcionalidad personalizada.
-
 
 Para generar un nuevo componenete usaremos angular-cli, y lo aremos corriendo el comando **genereate**.
 
 Generemos el componente **hello-world**
 
-
-```ng generate component hello-world
-```
+```ng generate component hello-world```
 Un componente tiene dos partes
   1. Una anotación de componente
   2. Una definicion de clase del componente
@@ -83,9 +80,9 @@ Lo que estamos diciendo es que cada ves q un nuevo UserItemComponent es creado s
 Ahora solamente para agregar esto a nuestra app vamos a user-item.component.html y agregamos:
 
 ```html
-  <p>
+  &lt;p&gt;
     Hello {{name}}
-  </p>
+  &lt;/p&gt;
 ```
 
 
@@ -164,16 +161,16 @@ Como vemos importamos el modulo **Input**. Luego agregamos @Input a la propiedad
 Ahora veamos como utilizamos eso en nuestro template.
 
 ```html
-<app-user-item
+&lt;app-user-item
     *ngFor="let name of names"
-[name]="name"> </app-user-item>
+[name]="name"&gt; &lt;/app-user-item&gt;
 ```
 
 - [name]: Indica que queremos pasar un valor a la variable name del componente  user-item
 - "name" viene de "let name", osea es el valor de cada elemento del arreglo names, para que quede mas claro lo podemos escribirlo
 
 ```html
-  <app-user-item
-  *ngFor="let individualUserName of names" [name]="individualUserName">
-  </app-user-item>
-```a
+  &lt;app-user-item
+  *ngFor="let individualUserName of names" [name]="individualUserName"&gt;
+  &lt;/app-user-item&gt;
+```
