@@ -6,8 +6,7 @@ la aplicacion va tener dos componentes. El componente de la app donde estará el
 
 Lo primero que hacemos es iniciar una nueva app de angular
 
-```$ ng new angular2_reddit
-```
+```$ ng new angular2_reddit```
 
 Entrando a app.component.ts podemos ver el template del componente principal de la app, que seguramente sea app.commponent.html. Aqui agregamos rápidamente un form donde tendremos dos campos Title y Link.
 
