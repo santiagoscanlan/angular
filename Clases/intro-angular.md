@@ -2,20 +2,17 @@
 
 ## Componenetes
 
-HTML entiende una cantidad limitada de built-in tags, como  <select>, <form>, <video> que tienen una funcionalidad definida por el browser.
+HTML entiende una cantidad limitada de built-in tags, como  &lt;select&gt;, &lt;form&gt;, &lt;video&gt; que tienen una funcionalidad definida por el browser.
 
-¿Qué pasaría si le quisieramos enseñar al browser nuevos tags? Por ejemplo, <weather> que muestre el clima, o <login> que muestre un panel para iniciar sesión.
+¿Qué pasaría si le quisieramos enseñar al browser nuevos tags? Por ejemplo, &lt;weather&gt; que muestre el clima, o &lt;login&gt; que muestre un panel para iniciar sesión.
 
 Ese es el fundamento principal de los componentes: Le enseñaremos al browser nuevos tags que tienen funcionalidad personalizada.
-
 
 Para generar un nuevo componenete usaremos angular-cli, y lo aremos corriendo el comando **genereate**.
 
 Generemos el componente **hello-world**
 
-
-```ng generate component hello-world
-```
+```ng generate component hello-world```
 Un componente tiene dos partes
   1. Una anotación de componente
   2. Una definicion de clase del componente

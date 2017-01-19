@@ -80,7 +80,7 @@ enum Role {Employee, Manager, Admin};
 var role : Role = Role Employee;
 
 ```
-## Any
+### Any
 
 any nos permite aceptar cualquier  tipo de valor para una variable. Este es el valor por defecto si no aclaramos el tipo a la variable.
 
