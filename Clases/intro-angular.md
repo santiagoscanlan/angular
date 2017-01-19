@@ -49,7 +49,7 @@ En *styleUrls* definimos las hojas de estilo que le queremos aplicar a nuestro t
 
 ### Cargando Nuestro componente
 
-Para colocar nuestro componente se lo tenemos que aplicar a un template que ya este siendo renderiado. abramos el archivo app.component.html, y agreguemos el tag <app-hello-world></app-hello-world>.
+Para colocar nuestro componente se lo tenemos que aplicar a un template que ya este siendo renderizado. Abramos el archivo app.component.html, y agreguemos el tag <app-hello-world></app-hello-world>.
 Guarda y refreshiá la página y fijate si funcionó.
 
 ## Agregando datos a nuestro componente
@@ -58,7 +58,7 @@ Hasta ahora nuestro componente es bastante aburrido y estatico, agreguemosle un 
 
 Primero lo agregamos a nuestro template para ver si funciona.
 
-Ahora vayamos a nuestro archivo .ts y agreamos
+Ahora vayamos a nuestro archivo .ts y agregamos
 ```javascript
 export class UserItemComponent implements OnInit {
   name: string;
@@ -74,7 +74,7 @@ export class UserItemComponent implements OnInit {
 ```
 En la class de UserItemComponent cuando ponemos **name: string;** significa que *name* es el atributo que queremos crear y *string* es el tipo
 
-El contructor es una función que es llamada cada vez que creamos nuevas instancias de esta clase.
+El constructor es una función que es llamada cada vez que creamos nuevas instancias de esta clase.
 
 En nuestro contructor asignamos nuestra propiedad name usando this.name.
 
@@ -141,15 +141,16 @@ Ahora si recargamos nuestra página vemos que seguimos tomando el name hard code
 Para cambiar eso vamos a permitir a nuestro user-item aceptar inputs asi que ingresamos a su typescript y cambiamos lo siguiente:
 
 ```javascript
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-user-item',
   templateUrl: './user-item.component.html',
-  styleUrls: ['./user-item.component.css']
+  styleUrls: ['./user-item.component.css'],
+  inputs: ["name"]
 })
 export class UserItemComponent implements OnInit {
-  @Input() name: string;
+  name: string;
 
   constructor() {
  }
@@ -159,7 +160,7 @@ export class UserItemComponent implements OnInit {
 
 }
 ```
-Como vemos importamos el modulo **Input**. Luego agregamos @Input a la propiedad name, esto nos permite pasarle un valor de nuestro *parent template*. Finalmente quitamos la data de nuestro contructor para que no tenga ningun valor por defecto.
+Como vemos agregamos la propiedad inputs a nuestro componente donde ponemos un arreglo de las propiedades que vamos a tomar de nuestro *parent template*. Finalmente quitamos la data de nuestro contructor para que no tenga ningun valor por defecto.
 
 Ahora veamos como utilizamos eso en nuestro template.
 
@@ -176,4 +177,4 @@ Ahora veamos como utilizamos eso en nuestro template.
   <app-user-item
   *ngFor="let individualUserName of names" [name]="individualUserName">
   </app-user-item>
-```a
+```

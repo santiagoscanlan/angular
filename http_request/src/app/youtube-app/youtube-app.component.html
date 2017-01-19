@@ -1,0 +1,5 @@
+<div>
+  <search-box (newResult)="updateResults($event)" (loading)="loading=$event"></search-box>
+  <p *ngIf="loading"> Loading... </p>
+</div>
+<search-results [results]="results"></search-results>

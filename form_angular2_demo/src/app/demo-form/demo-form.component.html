@@ -1,0 +1,5 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)"> <input type="text" placeholder="name" [formControl]="myForm.controls.name" [(ngModel)]="name"> <span *ngIf="!myForm.controls.name.valid && myForm.controls.name.touched"> Username es requerido </span> <input type="password" placeholder="password" [formControl]="myForm.controls.password">
+  <p *ngIf="!myForm.controls.password.valid && myForm.controls.password.touched">La contraseña no es valida <span *ngIf="myForm.hasError('!maxLength', 'password') || !myForm.hasError('!minLength', 'password')"> La contraseña debe tener entre 8 y 16 caracteres</span> </p> <input [class.error]="!myForm.controls.username.valid && myForm.controls.username.touched"
+      type="text" name="username" [formControl]="myForm.controls.username">
+  <div *ngIf="myForm.controls.username.hasError('noNumber')">El usuario debe tener numeros</div> <input type="submit"> <span *ngIf="!myForm.valid && submitted">Form not valid</span> </form>
+<p> El nombre es {{name}} </p>

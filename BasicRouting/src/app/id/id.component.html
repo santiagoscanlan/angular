@@ -1,0 +1,8 @@
+<div *ngIf="type==='posts' && element">
+  <h1>{{element.title}}</h1>
+  <p>{{element.body}}</p>
+</div>
+<div *ngIf="type==='users' && element">
+  <h1>{{element.name}}</h1>
+  <p>{{element.username}}</p>
+</div> <a href (click)="back()">Back</a>

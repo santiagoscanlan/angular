@@ -1,0 +1,2 @@
+<p> {{product.name}}</p> <img [src]="product.img" alt="" />
+<p> <b *ngFor="let department of product.department; let i = index">{{department}}<span>{{(i<product.department.length-1)?">":""}}</span></b> </p>

@@ -1,0 +1,4 @@
+<div *ngIf="currentUser">
+  <div class="messages">
+    <message *ngFor="let message of messages" [message]="message"></message>
+  </div> <input #input type="text" placeholder="Send new message us {{currentUser.name}}" (keyup.enter)="addMessage(input)"><button type="button" name="button" (click)="addMessage(input)">Send</button> </div>
