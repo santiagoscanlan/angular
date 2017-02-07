@@ -25,7 +25,7 @@ ngSwitch se fijará si una variable tiene un determinado valor y mostrara un ele
 
  Como vemos en el ejemplo myVar es asignado al ngSwitch,y luego muestra un elemento demendiendo del valor de la variable con ngSwitchCase, si no llegará a cumplirse ninguna de las anteriores, con ngSwitchDefault funcionaría como un else.
 
- ## NgStyle
+## NgStyle
 
  Nos va a servir para definir el estilo de forma dinamica.
 
@@ -51,12 +51,12 @@ Classs utiliza un objeto de clases donde el key es el nombre de la clase y la pr
 ```html
 <div [ngClass]="{bordered:true}">Tengo borde</div>
 
-<div [ngClass]="{bordered:true}">No tengo borde</div>
+<div [ngClass]="{bordered:false}">No tengo borde</div>
 
 
 <!-- Tambien podemos usar un arreglo de clases -->
 
-<div [ngClass]="[blue, round]">No tengo borde</div>
+<div [ngClass]="[blue, round]"> --- </div>
 
 ```
 

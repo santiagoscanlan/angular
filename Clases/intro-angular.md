@@ -12,7 +12,9 @@ Para generar un nuevo componenete usaremos angular-cli, y lo aremos corriendo el
 
 Generemos el componente **hello-world**
 
-```ng generate component hello-world```
+```
+ng generate component hello-world
+```
 Un componente tiene dos partes
   1. Una anotación de componente
   2. Una definicion de clase del componente

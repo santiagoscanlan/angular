@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { TrackResultComponent } from './search/track-result/track-result.component';
 
-import{SpotifyServiceService} from "./spotify-service.service";
+import{SpotifyServiceService, API_URL} from "./spotify-service.service";
 import { TrackComponent } from './track/track.component';
 import { AlbumComponent } from './album/album.component';
 
@@ -36,7 +36,7 @@ const routes: Routes =[
     HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, SpotifyServiceService],
+  providers: [{provide: API_URL, useValue:API_URL},{provide: LocationStrategy, useClass: HashLocationStrategy}, SpotifyServiceService],
   bootstrap: [AppComponent]
 })
 

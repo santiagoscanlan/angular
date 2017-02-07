@@ -12,7 +12,7 @@ Primero creemos el html de nuestro componente principal:
 ```
  Vemos que tenemos una variable name que vamos a utilizar para mostrar el ultimo nombre clickeado.
 
- **(nameSelected)** nos indica que en el componente *name-list* va emitir un evento con ese nombre, y cuando suceda queremos que ejecute la función **changeName**. *$event* es la data que vamos a emitir de ese evento, que se lo estamos enviando como agumento de la funcion.
+ **(nameSelected)** nos indica que en el componente *name-list* va emitir un evento con ese nombre, y cuando suceda queremos que ejecute la función **changeName**. *$event* es la data que vamos a emitir de ese evento, que se lo estamos enviando como argumento de la funcion.
 
  Ahora veamos como se ve el componente:
 
@@ -45,29 +45,6 @@ En cada uno mostramos los nombres en la vista y tenemos un evento click que ejec
 Ahora veamos como definimos estas dos cosas en nuestro componente:
 
 ```javascript
-@Component({
-  selector: 'name-list',
-  templateUrl: './name-list.component.html',
-  styleUrls: ['./name-list.component.css'],
-  outputs: ["nameSelected"]
-})
-export class NameListComponent implements OnInit {
-nameSelected: EventEmitter<string>
-names : string[]
-  constructor() {
-    this.nameSelected = new EventEmitter()
-    this.names = ["Santi", "Toni", "Guille"]
-    }
-
-    nameClicked(name){
-      console.log("clicked!")
-      this.nameSelected.emit(name)
-    }
-
-  ngOnInit() {
-  }
-
-}
 @Component({
   selector: 'name-list',
   templateUrl: './name-list.component.html',

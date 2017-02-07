@@ -132,3 +132,154 @@ Primero vemos algo muy simple tenemos la propiedad data, donde va ir el objeto q
 Luego creamos la función makeRequest() y aquí viene lo interesante. utilizamos el metodo request para solicitar la pagina de JSON Placeholder. Lo que nos devuelve request es una observable entonces mapiamos el resultado y lo convertimos en objeto, finalmente nos subscribimos al evento y le asignamos la informacion a data.
 
 Tambien podemos ver que cambiamos la propiedad loading a true, y una vez que llego la data la volvimos a cambiar false.
+
+
+
+## Youtube Search App
+
+Ahora hagamos una app un poco mas interesante. En la que busquemos videos de youtube. A medida que vamos ingresando al input van a ir apareciendo los resultados.
+
+En el ejemplo anterior hicimos de una forma muy simple el request http, pero para request mas complejos Angular nos recomienda crear servicios. Asi que lo primero que haremos es generar un YoutubeService.
+
+```javascript
+import { Injectable, Inject } from '@angular/core';
+import {Http, Response} from "@angular/http"
+import{Observable} from "rxjs"
+import "rxjs"
+import {Video} from "./video-model"
+
+export const API_URL: String = "https://www.googleapis.com/youtube/v3/search"
+
+export const API_KEY: String ="AIzaSyCVn2FYVgmAQ1NpToQ-qmSvLcxCY8HFx20"
+
+@Injectable()
+export class YoutubeService {
+
+  constructor(@Inject(API_URL) private url: String, @Inject(API_KEY) private key: String, public http: Http) { }
+
+  search(term): Observable<Video[]>{
+    const params : String =[
+      `part=snippet`,
+      `q=${term}`,
+      `type=video`,
+      `key=${this.key}`,
+      `maxResults=10`
+    ].join("&")
+
+    return this.http.request(`${this.url}?${params}`)
+    .map(res=>{
+      return res.json().items.map((video):Video=>{
+        return new Video({
+          title: video.snippet.title,
+          id: video.id.videoId,
+          thumbnail: video.snippet.thumbnails.default.url,
+          description: video.snippet.description
+        })
+      })
+  })
+}
+
+  }
+
+```
+
+Primero generamos los valores del url y el token key que vamos a usar en la aplicación, los exportamos porque tambien los queremos proveer en nuestra aplicación, esto lo hacemos por si queremos proveer otro valor para testing, production, o development poder hacerlo facilmente desde nuestro NgModule.
+
+
+Luego injectamos estos valores a nuestra aplicación y ademas utilizamos el modulo Http de Angular con el cual vamos a hacer los requests.
+
+Luego vamos a crear la función search esta funcion va tomar un term de busqueda y va hacer el request a youtube. Como vemos estamos devolviendo una observable de un arreglo de videos(osea que tenemos un tipo de dato llamado Video definido)
+
+Vayamos a ver como se ve nuestro Video
+
+```javascript
+
+export class Video {
+  title: String;
+  link: String;
+  thumbnail: String;
+  description: String;
+
+  constructor(obj){
+    this.title = obj.title
+    this.link = `https://youtube.com/watch?v=${obj.id}`
+    this.thumbnail = obj.thumbnail
+    this.description = obj.description
+
+  }
+
+}
+
+```
+
+Aquí no hay mucho que exlicar, solo vemos que propiedades y valores vamos a utilizar para generar nuestro Video.
+
+Volvamos a nuestra función de search(). Creamos los parametros con los cuales vamos a hacer el request y luego lo realizamos. Mapeamos el response, lo pasamos a json() eso tomamso la propiedad items donde estan todos los videos y lo mapeamos, para convertir cada resultado en una clase video, de esta manera devolvemos un Video[]. Genial ya tenemos nuestro servicio de Youtube resuelto. No nos olvidemos de proveerlo en nuestro NgModule.
+
+
+Ahora creemos el componente de youtube en el cual vamos a escribir nuestra aplicación. Primero veamos nuestro HTML para entender que vamos a necesitar en nuestro componente.
+
+
+```html
+<input id="searchBox">
+<search-results [results]="results"></search-results>
+```
+
+En una verdadera App de Angular deberiamos haber puesto el searchBox como un componente aparte que emita los resultados y se lo envie a search result, pero para mantener las cosas lo mas simple posibles simplemente lo pusimos en un input.
+
+Luego tenemos el componente SearchResults que toma como input results.
+
+Entonces lo que deberia hacer este componente es tomar el valor del serchBox, hacer un pedido al servicio de youtube y una vez que tiene los resultados enviarlo al componente de SearchResults donde seguramente se renderizen los resultados.
+
+Ahora si veamos entoces nuestro YoutubeComponent
+
+```javascript
+export class YoutubeComponent implements OnInit {
+  results : Video[]
+
+  constructor(public youtubeService: YoutubeService, public elemRef:ElementRef) {
+    }
+
+  ngOnInit() {
+    const searchBox = this.elemRef.nativeElement.querySelector("#searchBox")
+    Observable.fromEvent(searchBox, "keyup").map((e:any):String=>e.target.value)
+    .filter(text=>text.length>1)
+    .debounceTime(300)
+    .map(term=>this.youtubeService.search(term))
+    .switch()
+    .subscribe((results:Video[]):void=>{
+      this.results = results
+    })
+
+  }
+
+}
+```
+
+Como suponíamos tenemos una propiedad results donde vamos a poner el arreglo de videos que nos llegue del servicio de youtube. En el contructor utilizamos elementRef para tomar el valor del elemento del DOM y el servicio de youtube.
+
+Finalmente en ngOnInit agregamos el evento. Esto lo hacemos porque vamos a querer agregar el evento una vez que el componente se haya inicializado, sino podriamos tener problemas tomando a los elementos del componente.
+
+Entonces primero capturamos el input#searchBox y luego creamos una observable del evento "keyup". Ahora mapeamos el valor de input utilizando la informacion del evento que entrá, su propiedad target es el elemento del dom que activo el evento y devolvemos su valor. Ahora podemos usar algunos filtros para no enviar requests por cada keyup que hace el usuario. Hacemos que el length del arreglo tenga que tener por lo menos dos caracteres y que tengan q haber pasado por lo menos 300 milisegundos desde que dejo de tipear para enviar el evento. Luego mapeamos lo que llega para devolver el resultado del request utilizando el servicio de Youtube, y .switch() hace que tome el ultimo evento emitido descartando los anteriores, ya que los requests pueden llegar en distinto orden, y uno mas viejo pisar el mas nuevo. Una vez que tenemos el resultado del request nos subsribimos a la observable para darle el resultado a this.results.
+
+Ahora veamos el componente SearchResults que es donde van a pasar los resultados.
+
+```html
+<div *ngFor="let result of results">
+  <video-result [result]="result"></video-result>
+</div>
+
+```
+
+Entonces vemos que los resultados que pasan hacemos un ngFor creando por cada resultado un video-result. El template de video-result es:
+
+```html
+<div class="">
+  <a href="{{result.link}}"><img src="{{result.thumbnail}}" alt=""> </a>
+  <h1>{{result.title}}</h1>
+  <p>{{result.description}}</p> <a href="{{result.link}}">Watch Video</a> </div>
+```
+
+Aquí colocámos los resultados en el template. En los componentes solo debe tomar los valores que estamos usando en el template y nuestra página ya estaría funcionando.
+
+Si querriamos hacer mas pro esta página el searchbox debería ser un componente aparte que emita los resultados de busqueda, y también podria emitir el valor de una variable loading para que aparezca en la pagina cuando esta cargando.

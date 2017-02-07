@@ -17,18 +17,18 @@ InventoryApp
 
 1. Dependency Injection
 2. HTTP Request && Rxjs (Youtube)
-3. Routes
+
 
 ### Proyecto
 
-  Spotify
+  Proyecto API
 
 
 ## Dia 3
 
-1. MEAN
-2. Testing
+1. Routes
+
 
 ### Proyecto
 
-Fullstack Project
+SpotifyApp
